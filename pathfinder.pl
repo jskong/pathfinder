@@ -1,4 +1,4 @@
-% Declaration for route 4 up to commercial drive
+% Declaration for route 4
 stop(ubc, 4, alli, 1).
 stop(alli, 4, acad, 1).
 stop(acad, 4, bl53, 1).
@@ -49,7 +49,7 @@ stop(glen, 4, clar, 2).
 stop(clar, 4, mcle, 1).
 stop(mcle, 4, comm, 1).
 
-% Declaration for route 14 up to commercial drive
+% Declaration for route 14
 stop(ubc, 14, alli, 1).
 stop(alli, 14, acad, 1).
 stop(acad, 14, bl53, 1).
@@ -119,6 +119,7 @@ stop(bay5_burr, 44, burr, 1).
 stop(burr, 44, gran, 1).
 stop(gran, 44, whas, 2).
 
+% Declaration for route 99
 stop(ubc, 99, alli, 1).
 stop(alli, 99, sasa, 9).
 stop(sasa, 99, alma, 6).
@@ -131,7 +132,9 @@ stop(camb_br, 99, main_br, 4).
 stop(main_br, 99, fras_br, 3).
 stop(fras_br, 99, clar_br, 3).
 stop(clar_br, 99, comm_br, 2).
+stop(comm_br, 99, end, 0).
 
+% Declaration for route 25
 stop(ubc, 25, agro, 1).
 stop(agro, 25, thun, 1).
 stop(thun, 25, hamp, 1).
@@ -182,7 +185,7 @@ stop(perr, 25, mill, 1).
 stop(mill, 25, vict, 2).
 stop(vict, 25, glad, 1).
 stop(glad, 25, king, 2).
-stop(king, 25, broc, 1). 
+stop(king, 25, broc, 1).
 stop(broc, 25, _27th, 1).
 stop(_27th, 25, bay_2, 2).
 stop(bay_2, 25, nana, 1).
@@ -205,6 +208,28 @@ stop(cana, 25, stil, 3).
 stop(stil, 25, june, 1).
 stop(june, 25, loug, 1).
 stop(loug, 25, bay_5, 1).
+
+% Declaration for landmarks
+landmark(indigo, gran_br, 1).
+landmark(granville_island, gran, 10).
+landmark(granville_island, fir, 10).
+landmark(city_hall, camb_br, 6).
+landmark(vancouver_public_library, wgeo, 5).
+landmark(canada_place, wpen, 5).
+landmark(steam_clock, seym, 2).
+landmark(kitsilano_beach, vine, 10).
+landmark(rogers_arena, wgeo, 14).
+landmark(grounds_for_coffee, w10_alma, 0).
+landmark(grounds_for_coffee, alma, 2).
+landmark(safeway, macd_br, 2).
+landmark(bc_liquor, arbu_br, 0).
+landmark(storm_crow, burr_wbroad, 3).
+landmark(storm_crow, gran_br, 6).
+landmark(michaels, gran_br, 4).
+landmark(fox_cabaret, main_br, 2).
+landmark(sahilli_park, fras_br, 2).
+landmark(vcc, clar_br, 4).
+landmark(rio_theatre, comm_br, 1).
 
 routeTime(StopA, StopA, _, 0).
 
