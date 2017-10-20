@@ -1,4 +1,11 @@
-% Declaration for route 4
+% Interpretation of stop
+% Stop is the current stop
+% Line is the bus line number (e.g 14)
+% NextStop is the stop after Stop
+% TimeToNext is bus time to get from stop to next stop
+% stop(Stop, Line, NextStop, TimeToNext).
+
+% Declaration for route 4 up to commercial drive
 stop(ubc, 4, alli, 1).
 stop(alli, 4, acad, 1).
 stop(acad, 4, bl53, 1).
@@ -34,7 +41,7 @@ stop(davi, 4, nels, 1).
 stop(nels, 4, smit, 1).
 stop(smit, 4, wgeo, 1).
 stop(wgeo, 4, duns, 1).
-stop(duns, 4, wpen, 1)
+stop(duns, 4, wpen, 1).
 stop(wpen, 4, whas, 1).
 stop(whas, 4, seym, 1).
 stop(seym, 4, home, 1).
@@ -49,7 +56,7 @@ stop(glen, 4, clar, 2).
 stop(clar, 4, mcle, 1).
 stop(mcle, 4, comm, 1).
 
-% Declaration for route 14
+% Declaration for route 14 up to commercial drive
 stop(ubc, 14, alli, 1).
 stop(alli, 14, acad, 1).
 stop(acad, 14, bl53, 1).
@@ -77,8 +84,8 @@ stop(vine_wbroad, 14, arbu_wbroad, 1).
 stop(arbu_wbroad, 14, mapl_wbroad, 1).
 stop(mapl_wbroad, 14, burr_wbroad, 2).
 stop(burr_wbroad, 14, fir_wbroad, 2).
-stop(fir_wbroad, 14, wbroad_gran, 3).
-stop(wbroad_gran, 14, w7_gran, 1).
+stop(fir_wbroad, 14, gran_br, 3).
+stop(gran_br, 14, w7_gran, 1).
 stop(w7_gran, 14, w5_gran, 1).
 stop(w5_gran, 14, drak, 1).
 stop(drak, 14, davi, 1).
@@ -119,7 +126,6 @@ stop(bay5_burr, 44, burr, 1).
 stop(burr, 44, gran, 1).
 stop(gran, 44, whas, 2).
 
-% Declaration for route 99
 stop(ubc, 99, alli, 1).
 stop(alli, 99, sasa, 9).
 stop(sasa, 99, alma, 6).
@@ -132,9 +138,7 @@ stop(camb_br, 99, main_br, 4).
 stop(main_br, 99, fras_br, 3).
 stop(fras_br, 99, clar_br, 3).
 stop(clar_br, 99, comm_br, 2).
-stop(comm_br, 99, end, 0).
 
-% Declaration for route 25
 stop(ubc, 25, agro, 1).
 stop(agro, 25, thun, 1).
 stop(thun, 25, hamp, 1).
@@ -147,11 +151,11 @@ stop(trim, 25, cour, 1).
 stop(cour, 25, camo, 1).
 stop(camo, 25, crow, 1).
 stop(crow, 25, high, 1).
-stop(high, 25, _17th, 1).
-stop(_17th, 25, _19th, 1).
-stop(_19th, 25, _21st, 1).
-stop(_21st, 25, _23rd, 1).
-stop(_23rd, 25, dunb, 1).
+stop(high, 25, w17, 1).
+stop(w17, 25, w19, 1).
+stop(w19, 25, w21, 1).
+stop(w21, 25, w23, 1).
+stop(w23, 25, dunb, 1).
 stop(dunb, 25, coll, 1).
 stop(coll, 25, blen, 1).
 stop(blen, 25, bala, 1).
@@ -186,8 +190,8 @@ stop(mill, 25, vict, 2).
 stop(vict, 25, glad, 1).
 stop(glad, 25, king, 2).
 stop(king, 25, broc, 1).
-stop(broc, 25, _27th, 1).
-stop(_27th, 25, bay_2, 2).
+stop(broc, 25, w27, 1).
+stop(w27, 25, bay_2, 2).
 stop(bay_2, 25, nana, 1).
 stop(nana, 25, pent, 1).
 stop(pent, 25, sloc, 1).
@@ -210,6 +214,10 @@ stop(june, 25, loug, 1).
 stop(loug, 25, bay_5, 1).
 
 % Declaration for landmarks
+% landmark(Landmark, Stop, WalkingTime)
+% Landmark is the name of the place you want to go
+% Stop is a stop near the landmark
+% WalkingTime is the walking time from the stop to the landmark
 landmark(indigo, gran_br, 1).
 landmark(granville_island, gran, 10).
 landmark(granville_island, fir, 10).
@@ -233,13 +241,34 @@ landmark(rio_theatre, comm_br, 1).
 
 routeTime(StopA, StopA, _, 0).
 
+% Interpreation of routeTime
+% StopA is the start point
+% StopB is the destination stop
+% Route is the bus line number
+% Time is the result time it takes to get from StopA to StopB
 routeTime(StopA, StopB, Route, T) :-
   stop(StopA, Route, NextStop, T0),
   routeTime(NextStop, StopB, Route, T1),
   T is T0 + T1.
 
-tripTime(L, R, T) :-
+% Interpretation of tripTime, this version always navigates from UBC
+% L is the landmark to navigate to
+% R is the bus route
+% T is time to the landmark
+% ClosestStop is the stop to get off at to reach landmark
+tripTime(L, R, T, ClosestStop) :-
   stop(ClosestStop, R, _, _),
   routeTime(ubc, ClosestStop, R, T0),
+  landmark(L, ClosestStop, T1),
+  T is T0 + T1.
+
+% Interpretation of tripTime
+% Start is the start stop
+% L is the landmark to navigate to
+% R is the bus route
+% T is time to the landmark
+tripTimeWithStart(Start, L, R, T) :-
+  stop(ClosestStop, R, _, _),
+  routeTime(Start, ClosestStop, R, T0),
   landmark(L, ClosestStop, T1),
   T is T0 + T1.
