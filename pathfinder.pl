@@ -1,3 +1,8 @@
+% Team
+% Jillian Kong - 34507146
+% Jack Still - 39706149
+% Ethan Wilberforce - 20628146
+
 % Interpretation of stop
 % Stop is the current stop
 % Line is the bus line number (e.g 14)
