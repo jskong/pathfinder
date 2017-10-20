@@ -244,9 +244,24 @@ landmark(sahilli_park, fras_br, 2).
 landmark(vcc, clar_br, 4).
 landmark(rio_theatre, comm_br, 1).
 
+% Examples
+
+% tripTime(indigo, R, T, S).
+% R = 14,
+% T = 38,
+% S = gran_br ;
+% R = 99,
+% T = 29,
+% S = gran_br ;
+
+% tripTimeWithStart(alma, indigo, R, T, S).
+% R = 99,
+% T = 13,
+% S = gran_br ;
+
 routeTime(StopA, StopA, _, 0).
 
-% Interpreation of routeTime
+% Interpretation of routeTime
 % StopA is the start point
 % StopB is the destination stop
 % Route is the bus line number
@@ -267,12 +282,12 @@ tripTime(L, R, T, ClosestStop) :-
   landmark(L, ClosestStop, T1),
   T is T0 + T1.
 
-% Interpretation of tripTime
+% Interpretation of tripTimeWithStart
 % Start is the start stop
 % L is the landmark to navigate to
 % R is the bus route
 % T is time to the landmark
-tripTimeWithStart(Start, L, R, T) :-
+tripTimeWithStart(Start, L, R, T, ClosestStop) :-
   stop(ClosestStop, R, _, _),
   routeTime(Start, ClosestStop, R, T0),
   landmark(L, ClosestStop, T1),
