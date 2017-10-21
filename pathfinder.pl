@@ -25,13 +25,13 @@ stop(trim, 4, bl41, 1).
 stop(bl41, 4, diep, 1).
 stop(diep, 4, wall, 1).
 stop(wall, 4, high, 1).
-stop(high, 4, alma, 1).
-stop(alma, 4, coll, 1).
+stop(high, 4, alma_4th, 1).
+stop(alma_4th, 4, coll, 1).
 stop(coll, 4, wtloo, 1).
 stop(wtloo, 4, trut, 1).
 stop(trut, 4, bays, 2).
-stop(bays, 4, mac, 1).
-stop(mac, 4, traf, 2).
+stop(bays, 4, mac_4th, 1).
+stop(mac_4th, 4, traf, 2).
 stop(traf, 4, larc, 1).
 stop(larc, 4, bals, 1).
 stop(bals, 4, vine, 1).
@@ -39,8 +39,9 @@ stop(vine, 4, arbu_3, 2).
 stop(arbu_3, 4, cypr, 1).
 stop(cypr, 4, burr, 1).
 stop(burr, 4, fir, 2).
-stop(fir, 4, gran, 3).
-stop(gran, 4, drak, 6).
+% overlaps with 14 here
+stop(fir, 4, gran_2nd, 3).
+stop(gran_2nd, 4, drak, 6).
 stop(drak, 4, davi, 1).
 stop(davi, 4, nels, 1).
 stop(nels, 4, smit, 1).
@@ -118,8 +119,8 @@ stop(mcle, 14, comm, 1).
 stop(ubc, 44, wepa, 2).
 stop(wepa, 44, hamb, 3).
 stop(hamb, 44, tolm, 7).
-stop(tolm, 44, alma, 7).
-stop(alma, 44, mac, 5).
+stop(tolm, 44, alma_4th, 7).
+stop(alma_4th, 44, mac, 5).
 stop(mac, 44, vine, 3).
 stop(vine, 44, davi, 6).
 stop(davi, 44, como, 1).
@@ -128,13 +129,13 @@ stop(nels, 44, robs, 2).
 stop(robs, 44, wgeo, 1).
 stop(wgeo, 44, bay5_burr, 1).
 stop(bay5_burr, 44, burr, 1).
-stop(burr, 44, gran, 1).
-stop(gran, 44, whas, 2).
+stop(burr, 44, gran_2nd, 1).
+stop(gran_2nd, 44, whas, 2).
 
 stop(ubc, 99, alli, 1).
-stop(alli, 99, sasa, 9).
-stop(sasa, 99, alma, 6).
-stop(alma, 99, macd_br, 5).
+stop(alli, 99, sasa_10, 9).
+stop(sasa_10, 99, alma_br, 6).
+stop(alma_br, 99, macd_br, 5).
 stop(macd_br, 99, arbu_br, 4).
 stop(arbu_br, 99, gran_br, 3).
 stop(gran_br, 99, heat, 5).
@@ -224,7 +225,7 @@ stop(loug, 25, bay_5, 1).
 % Stop is a stop near the landmark
 % WalkingTime is the walking time from the stop to the landmark
 landmark(indigo, gran_br, 1).
-landmark(granville_island, gran, 10).
+landmark(granville_island, gran_2nd, 10).
 landmark(granville_island, fir, 10).
 landmark(city_hall, camb_br, 6).
 landmark(vancouver_public_library, wgeo, 5).
@@ -233,7 +234,7 @@ landmark(steam_clock, seym, 2).
 landmark(kitsilano_beach, vine, 10).
 landmark(rogers_arena, wgeo, 14).
 landmark(grounds_for_coffee, w10_alma, 0).
-landmark(grounds_for_coffee, alma, 2).
+landmark(grounds_for_coffee, alma_br, 2).
 landmark(safeway, macd_br, 2).
 landmark(bc_liquor, arbu_br, 0).
 landmark(storm_crow, burr_wbroad, 3).
@@ -254,7 +255,7 @@ landmark(rio_theatre, comm_br, 1).
 % T = 29,
 % S = gran_br ;
 
-% tripTimeWithStart(alma, indigo, R, T, S).
+% tripTimeWithStart(alma_br, indigo, R, T, S).
 % R = 99,
 % T = 13,
 % S = gran_br ;
