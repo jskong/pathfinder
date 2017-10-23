@@ -10,6 +10,123 @@
 % TimeToNext is bus time to get from stop to next stop
 % stop(Stop, Line, NextStop, TimeToNext).
 
+% Examples
+
+% Multi-route destination 1
+% tripTime(indigo, R, T, S).
+% R = 14,
+% T = 38,
+% S = gran_br ;
+% R = 99,
+% T = 29,
+% S = gran_br ;
+
+% Multi-route destination 1 with MaxTime 40
+% tripTimeMaxTime(indigo, R, T, S, 40).
+% R = 14,
+% T = 38,
+% S = gran_br ;
+% R = 99,
+% T = 29,
+% S = gran_br
+
+% Multi-route destination 1 with MaxTime 30
+% tripTimeMaxTime(indigo, R, T, S, 30).
+% R = 99,
+% T = 29,
+% S = gran_br ;
+
+% Multi-route destination 2 with MaxWalkTime 14
+% tripTimeMaxWalkTime(rogers_arena, R, T, S, 14).
+% R = 4,
+% T = 61,
+% S = wgeo ;
+% R = 14,
+% T = 58,
+% S = wgeo ;
+% R = 44,
+% T = 52,
+% S = wgeo ;
+
+% Multi-route destination 2 with MaxWalkTime 10
+% tripTimeMaxWalkTime(rogers_arena, R, T, S, 10).
+% false.
+
+% Trip starting from not-UBC
+% tripTimeWithStart(alma_br, indigo, R, T, S).
+% R = 99,
+% T = 13,
+% S = gran_br ;
+
+% Invalid landmark/route combination
+% tripTime(rogers_arena, 25, T, S).
+% false.
+
+% Invalid landmark name
+% tripTime(false_beach, R, T, S).
+% false.
+
+% Invalid stop name (trip starting from not-UBC)
+% tripTimeWithStart(alma_broken, indigo, R, T, S).
+% false.
+
+% Interpretation of routeTime
+% StopA is the start point
+% StopB is the destination stop
+% Route is the bus line number
+% Time is the result time it takes to get from StopA to StopB
+routeTime(StopA, StopA, _, 0).
+routeTime(StopA, StopB, Route, T) :-
+  stop(StopA, Route, NextStop, T0),
+  routeTime(NextStop, StopB, Route, T1),
+  T is T0 + T1.
+
+% Interpretation of tripTime, this version always navigates from UBC
+% L is the landmark to navigate to
+% R is the bus route
+% T is time to the landmark
+% ClosestStop is the stop to get off at to reach landmark
+tripTime(L, R, T, ClosestStop) :-
+  stop(ClosestStop, R, _, _),
+  routeTime(ubc, ClosestStop, R, T0),
+  landmark(L, ClosestStop, T1),
+  T is T0 + T1.
+
+% Interpretation of tripTimeWithStart
+% Start is the start stop
+% L is the landmark to navigate to
+% R is the bus route
+% T is time to the landmark
+tripTimeWithStart(Start, L, R, T, ClosestStop) :-
+  stop(ClosestStop, R, _, _),
+  routeTime(Start, ClosestStop, R, T0),
+  landmark(L, ClosestStop, T1),
+  T is T0 + T1.
+
+% Interpretation of tripTimeMaxTime
+% L is the landmark to navigate to
+% R is the bus route
+% T is time to the landmark
+% MT is the maximum trip time the user wants.
+tripTimeMaxTime(L, R, T, ClosestStop, MT) :-
+  stop(ClosestStop, R, _, _),
+  routeTime(ubc, ClosestStop, R, T0),
+  landmark(L, ClosestStop, T1),
+  T is T0 + T1,
+  T =< MT.
+
+% Interpretation of tripTimeMaxWalkTime
+% L is the landmark to navigate to
+% R is the bus route
+% T is time to the landmark
+% MT is the maximum walk time the user wants.
+tripTimeMaxWalkTime(L, R, T, ClosestStop, MT) :-
+  stop(ClosestStop, R, _, _),
+  routeTime(ubc, ClosestStop, R, T0),
+  landmark(L, ClosestStop, T1),
+  T is T0 + T1,
+  T1 =< MT.
+
 % Declaration for route 4 up to commercial drive
 stop(ubc, 4, alli, 1).
 stop(alli, 4, acad, 1).
@@ -244,100 +361,3 @@ landmark(fox_cabaret, main_br, 2).
 landmark(sahilli_park, fras_br, 2).
 landmark(vcc, clar_br, 4).
 landmark(rio_theatre, comm_br, 1).
-
-% Examples
-
-% Multi-route destination 1
-% tripTime(indigo, R, T, S).
-% R = 14,
-% T = 38,
-% S = gran_br ;
-% R = 99,
-% T = 29,
-% S = gran_br ;
-
-% Multi-route destination 1 with MaxTime
-
-% Multi-route destination 2
-% tripTime(rogers_arena, R, T, S).
-% R = 4,
-% T = 61,
-% S = wgeo ;
-% R = 14,
-% T = 58,
-% S = wgeo ;
-% R = 44,
-% T = 52,
-% S = wgeo ;
-
-% Multi-route destination 3
-
-% Invalid landmark/route combination
-
-% Invalid landmark name
-% tripTime(false_beach, R, T, S).
-% false.
-
-% Trip starting from not-UBC
-% tripTimeWithStart(alma_br, indigo, R, T, S).
-% R = 99,
-% T = 13,
-% S = gran_br ;
-
-% tripTimeMaxTime(indigo, R, T, S, 30).
-% R = 99,
-% T = 29,
-% S = gran_br ;
-
-% tripTimeMaxTime(indigo, R, T, S, 40).
-% R = 14,
-% T = 38,
-% S = gran_br ;
-% R = 99,
-% T = 29,
-% S = gran_br
-
-% Interpretation of routeTime
-% StopA is the start point
-% StopB is the destination stop
-% Route is the bus line number
-% Time is the result time it takes to get from StopA to StopB
-routeTime(StopA, StopA, _, 0).
-routeTime(StopA, StopB, Route, T) :-
-  stop(StopA, Route, NextStop, T0),
-  routeTime(NextStop, StopB, Route, T1),
-  T is T0 + T1.
-
-% Interpretation of tripTime, this version always navigates from UBC
-% L is the landmark to navigate to
-% R is the bus route
-% T is time to the landmark
-% ClosestStop is the stop to get off at to reach landmark
-tripTime(L, R, T, ClosestStop) :-
-  stop(ClosestStop, R, _, _),
-  routeTime(ubc, ClosestStop, R, T0),
-  landmark(L, ClosestStop, T1),
-  T is T0 + T1.
-
-% Interpretation of tripTimeWithStart
-% Start is the start stop
-% L is the landmark to navigate to
-% R is the bus route
-% T is time to the landmark
-tripTimeWithStart(Start, L, R, T, ClosestStop) :-
-  stop(ClosestStop, R, _, _),
-  routeTime(Start, ClosestStop, R, T0),
-  landmark(L, ClosestStop, T1),
-  T is T0 + T1.
-
-% Interpretation of tripTimeMaxTime
-% L is the landmark to navigate to
-% R is the bus route
-% T is time to the landmark
-% MT is the maximum trip time the user wants.
-tripTimeMaxTime(L, R, T, ClosestStop, MT) :-
-  stop(ClosestStop, R, _, _),
-  routeTime(ubc, ClosestStop, R, T0),
-  landmark(L, ClosestStop, T1),
-  T is T0 + T1,
-  T < MT.
