@@ -247,6 +247,7 @@ landmark(rio_theatre, comm_br, 1).
 
 % Examples
 
+% Multi-route destination 1
 % tripTime(indigo, R, T, S).
 % R = 14,
 % T = 38,
@@ -255,18 +256,42 @@ landmark(rio_theatre, comm_br, 1).
 % T = 29,
 % S = gran_br ;
 
+% Multi-route destination 1 with MaxTime
+
+% Multi-route destination 2
+% tripTime(rogers_arena, R, T, S).
+% R = 4,
+% T = 61,
+% S = wgeo ;
+% R = 14,
+% T = 58,
+% S = wgeo ;
+% R = 44,
+% T = 52,
+% S = wgeo ;
+
+% Multi-route destination 3
+
+
+% Invalid landmark/route combination
+
+% Invalid landmark name
+% tripTime(false_beach, R, T, S).
+% false.
+
+
+% Trip starting from not-UBC
 % tripTimeWithStart(alma_br, indigo, R, T, S).
 % R = 99,
 % T = 13,
 % S = gran_br ;
-
-routeTime(StopA, StopA, _, 0).
 
 % Interpretation of routeTime
 % StopA is the start point
 % StopB is the destination stop
 % Route is the bus line number
 % Time is the result time it takes to get from StopA to StopB
+routeTime(StopA, StopA, _, 0).
 routeTime(StopA, StopB, Route, T) :-
   stop(StopA, Route, NextStop, T0),
   routeTime(NextStop, StopB, Route, T1),
