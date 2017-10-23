@@ -260,6 +260,20 @@ landmark(rio_theatre, comm_br, 1).
 % T = 13,
 % S = gran_br ;
 
+% tripTimeMaxTime(indigo, R, T, S, 30).
+% R = 99,
+% T = 29,
+% S = gran_br ;
+
+% tripTimeMaxTime(indigo, R, T, S, 40).
+% R = 14,
+% T = 38,
+% S = gran_br ;
+% R = 99,
+% T = 29,
+% S = gran_br 
+
+
 routeTime(StopA, StopA, _, 0).
 
 % Interpretation of routeTime
@@ -293,3 +307,16 @@ tripTimeWithStart(Start, L, R, T, ClosestStop) :-
   routeTime(Start, ClosestStop, R, T0),
   landmark(L, ClosestStop, T1),
   T is T0 + T1.
+  
+% Interpretation of tripTimeMaxTime
+% L is the landmark to navigate to
+% R is the bus route
+% T is time to the landmark
+% MT is the maximum trip time the user wants.
+tripTimeMaxTime(L, R, T, ClosestStop, MT) :-
+  stop(ClosestStop, R, _, _),
+  routeTime(ubc, ClosestStop, R, T0),
+  landmark(L, ClosestStop, T1),
+  T is T0 + T1,
+  T < MT.
+
