@@ -52,6 +52,24 @@
 % tripTimeMaxWalkTime(rogers_arena, R, T, S, 10).
 % false.
 
+% Multi-route destinaton 3 with MaxWalkTime 3
+% tripTimeMaxWalkTime(storm_crow, R, T, S, 3).
+% R = 14,
+% T = 35,
+% S = burr_wbroad ;
+
+% Multi-route destinaton 3 with MaxWalkTime 6
+% tripTimeMaxWalkTime(storm_crow, R, T, S, 6).
+% R = 14,
+% T = 35,
+% S = burr_wbroad ;
+% R = 14,
+% T = 43,
+% S = gran_br ;
+% R = 99,
+% T = 34,
+% S = gran_br ;
+
 % Trip starting from not-UBC
 % tripTimeWithStart(alma_br, indigo, R, T, S).
 % R = 99,
